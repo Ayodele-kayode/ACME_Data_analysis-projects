@@ -1,5 +1,5 @@
-**DOCUMENTATION OF SQL QUERIES AND EXPLANATION OF LOGICS USED
-Description of the database schema and tables used**
+DOCUMENTATION OF SQL QUERIES AND EXPLANATION OF LOGICS USED
+Description of the database schema and tables used
 This database schema comprises of a table designed to store and manage smartphone data. The table in the schema contains columns that represent different properties of the data being stored. This table stores detailed information about various smartphone models.
  Below is a description of the table and it’s columns:
 Table name : Smartphone_cleaned
@@ -28,13 +28,13 @@ primary_camera_rear (varchar): The resolution of the primary rear camera in mega
  • primary_camera_front (varchar): The resolution of the primary front camera in megapixels.
  • extended_memory (bit): The capacity of extended memory (e.g., microSD card support) in the smartphone, if applicable
 
-**Explanation of SQL query logic and any data transformations performed**
-**1.	Data cleaning**
-**a)	A copy of the table was made and named “Smartphone_new” to avoid tampering with the original table, it was done using the query below :**
+Explanation of SQL query logic and any data transformations performed
+1.	Data cleaning
+a)	A copy of the table was made and named “Smartphone_new” to avoid tampering with the original table, it was done using the query below :
 Select *
 into Smartphone_new
 from smartphone_cleaned_v2
-**b)	A check was conducted to get rid of duplicates**
+b)	A check was conducted to get rid of duplicates
 With SmartPhoneCTE AS (
 Select *,
 ROW_NUMBER() OVER(
@@ -46,21 +46,21 @@ from Smartphone_new
 SELECT *
 from SmartPhoneCTE
 where row_num > 1
-**c)	Checking for nulls**
+c)	Checking for nulls
 SELECT
     SUM(CASE WHEN brand_name IS NULL THEN 1 ELSE 0 END) AS    brand_name_nulls,
    SUM(CASE WHEN model IS NULL THEN 1 ELSE 0 END) AS model_nulls,
    SUM(CASE WHEN price IS NULL THEN 1 ELSE 0 END) AS price_nulls
 FROM Smartphone_new
 
-**d)	The new table was altered by updating the null values in the OS column with the two distinct OS as introduced “android” and “ios”**
+d)	The new table was altered by updating the null values in the OS column with the two distinct OS as introduced “android” and “ios”
 
- **--Dealing with nulls in OS columns**
+ --Dealing with nulls in OS columns
  select distinct(brand_name), os
 from Smartphone_new
 where os is null
 
-**--Filling the nulls in the OS column with thier respective Operating system**
+--Filling the nulls in the OS column with thier respective Operating system
 update Smartphone_new
 set os = case when os is null and brand_name != 'apple' then 'android'
 		else 'ios'
@@ -72,12 +72,12 @@ update Smartphone_new
 	end
 
   		
-**e)	An altercation was done on the “Processor_speed” column by rounding up the values into 2 decimal place to have a uniform form of values in the column.**
+e)	An altercation was done on the “Processor_speed” column by rounding up the values into 2 decimal place to have a uniform form of values in the column.
 
  update Smartphone_new
 set processor_speed = ROUND((processor_speed),2)
 
-**f)	Replacement of nulls contained in the “primary front camera” and the “num of front camera” as both have the same number of nulls indicating that the phone models have no front camera, so it was replaced with ‘0’**
+f)	Replacement of nulls contained in the “primary front camera” and the “num of front camera” as both have the same number of nulls indicating that the phone models have no front camera, so it was replaced with ‘0’
 
 update Smartphone_new
 set primary_camera_front = case when primary_camera_front is null then '0'
@@ -134,7 +134,7 @@ set processor_brand = case when processor_brand is null then 'unknown'
 			else rating
 			end
 
-**i)	Replacing the ‘1’ and ‘0’ with ‘Y’ for Yes and ‘N’ for No respectively in the “has_5g”, “has_nfc”, “has_ir_blaster” columns.**
+i)	Replacing the ‘1’ and ‘0’ with ‘Y’ for Yes and ‘N’ for No respectively in the “has_5g”, “has_nfc”, “has_ir_blaster” columns.
 
 a)	The first step was to alter the table by creating new columns for the three columns… This was done using the query below
 Alter table Smartphone_new
@@ -163,7 +163,7 @@ alter table Smartphone_new
 	has_nfc
 
 
-**2) DATA ANALYSIS**
+2) DATA ANALYSIS
 
 a)	Top 10 brand names by the average rating. As shown below, the AVG function was used to calculate the average rating of each brand and the round function was to make sure the values are uniform. The “as” was used to create a new name for the new column containing the new average values for each brand. The group by function categorized the brand name uniquely.
 
@@ -172,7 +172,7 @@ from Smartphone_new
 group by brand_name
 order by AverageRating desc
 
-**b)	Top 20 Average price of phones for each brand**
+b)	Top 20 Average price of phones for each brand
 
 Generating the data for the top 20 brand by the average prices of each 
 brand using the AVG function and the ORDER BY function does the sorting of the result. Desc which means the resulting table will be sorted by the Average price ranking from the highest to the lowest value. 
@@ -182,7 +182,7 @@ from  Smartphone_new
 group by brand_name
 order by AveragePrice desc
 
-**c)	Top 10 Brand names with the highest number of phones with 5g properties**
+c)	Top 10 Brand names with the highest number of phones with 5g properties
 
 Count – This counts the number of brands that supports the use of 5g.
 Where – the where function serves as filter function returning the brands that only supports the use of 5g
@@ -194,7 +194,7 @@ where Uses_5g = 'Y'
 group by brand_name
 order by count_of_5g desc
 
-****d)	What is the most common processor brand ****
+d)	What is the most common processor brand 
 
 Select top 1 processor_brand, COUNT(*) AS count_of_brand
 from Smartphone_new
@@ -206,7 +206,7 @@ AS – The AS creates an alias for the new table
 
 
 
-**e)How many mobile phones runs on android **
+e)	How many mobile phones runs on android 
 
 Select count(model) as count_of_phones, os
 from Smartphone_new
@@ -218,7 +218,7 @@ From – specifies the database and table to generate the result from.
 Where – filters the data to return from the database. In the query above, the models needed was the models that runs on the android os thus the where condition that was introduced into the query.
 
 
-**f)Find smartphones with a refresh rate of at least 120 Hz and a ram capacity of 8 GB or more.**
+f)	Find smartphones with a refresh rate of at least 120 Hz and a ram capacity of 8 GB or more.
 
 Select model, refresh_rate, ram_capacity
 From Smartphone_new
@@ -229,7 +229,7 @@ From – specifies the database and table to generate the result from.
 Where – filters the data to return from the database. In the query above, the condition to be satisfied was returning smartphone models that has a refresh rate greater than or equal to 120hz and ram capacity greater than or equal to 8gb ram.
 
 
-**g)	 Total number of smartphones per brand**
+g)	 Total number of smartphones per brand
 
 select brand_name, COUNT(model) AS num_of_models
 from Smartphone_new
@@ -242,7 +242,7 @@ Group by – groups the brand uniquely
 Order by – Sorts the count. This function was introduced in order to get the brand with the highest count at the top followed by the subsequent brands according to their values.
 
 
-**h)	 The phone with the fastest processor_speed**
+h)	 The phone with the fastest processor_speed
 
 Select model, processor_speed 
 From Smartphone_new
@@ -253,7 +253,7 @@ From – specifies the database and table to generate the result from.
 Order by – Sorts the ‘Processor speed’ column by ranking from the largest to the smallest value
 
 
-**i)	 Brands that have the highest number of phones with rear camera greater than 3**
+i)	 Brands that have the highest number of phones with rear camera greater than 3
 
 
 Select brand_name, count(model) as count_of_model
@@ -268,7 +268,7 @@ Where – Works as a filter for specific conditions to be met.
 Order by – sorts the data according to the way either by descending or ascending order. In this case, the counts was sorted in descending order to return the brands that has the highest count according to the condition.
 
 
-**j)	Brands with the highest number of mobile phones that does not have Ir blaster but has Near field communication property**
+j)	Brands with the highest number of mobile phones that does not have Ir blaster but has Near field communication property
 
 
 Select brand_name, count(brand_name) as num_of_brand
@@ -283,7 +283,7 @@ Where – filters the data to return from the database. In the below   query, th
 Group by – groups the brand uniquely
 
 
-**k)	 Checking to see the top 5 brands with the fastest charging rate**
+k)	 Checking to see the top 5 brands with the fastest charging rate
 
 
     select top 5 brand_name, MAX(fast_charging) as Fastest_charging_brand
@@ -299,7 +299,7 @@ Group by – groups the brand uniquely
 Order by – Arranges the results in descending order(Desc) to speicify the values at the top
 
 
-**l)	checking for processor brand that supports extended memory up to 1TB and has processor_speed greater than or equal to 2.5**
+l)	checking for processor brand that supports extended memory up to 1TB and has processor_speed greater than or equal to 2.5
 
 select processor_brand, count(processor_brand) as num_of_pro_brands
 from Smartphone_new
@@ -315,7 +315,7 @@ Group by – groups the brand uniquely
 
 
 
-**m) Checking for brands with battery capacity greater than '5500' and has fast charging < '200'**
+m)	 Checking for brands with battery capacity greater than '5500' and has fast charging < '200'
 
 
 select brand_name, count(battery_capacity) as count_of_brands
@@ -325,7 +325,7 @@ group by brand_name
 order by count_of_brands desc
 
 
-Select – Returns selected columns 
+Select – Allows you select the columns to return
 From – specifies the database and table to generate the result from.
 Where – filters the data to return from the database. In the below   query, the mobile phones with battery capacity greater than 5500 and fast charging less than 200kw.
 Group by – groups the brand uniquely.
