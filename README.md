@@ -33,6 +33,7 @@ Columns:
 1.	## **Data cleaning**
    
 **a)A copy of the table was made and named “Smartphone_new” to avoid tampering with the original table, it was done using the query below :**
+
 			Select *
 			into Smartphone_new
 			from smartphone_cleaned_v2
