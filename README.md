@@ -40,6 +40,7 @@ Columns:
 
 
 **b)A check was conducted to get rid of duplicates**
+
 			With SmartPhoneCTE AS (
 						Select *,
 					ROW_NUMBER() OVER(
@@ -53,6 +54,7 @@ Columns:
 			where row_num > 1
    
 **c)Checking for nulls**
+
 			SELECT
     				SUM(CASE WHEN brand_name IS NULL THEN 1 ELSE 0 END) AS    brand_name_nulls,
    				SUM(CASE WHEN model IS NULL THEN 1 ELSE 0 END) AS model_nulls,
@@ -67,6 +69,7 @@ from Smartphone_new
 where os is null
 
 **--Filling the nulls in the OS column with thier respective Operating system**
+
 			update Smartphone_new
 				set os = case when os is null and brand_name != 'apple' then 'android'
 				else 'ios'
@@ -144,6 +147,7 @@ h)**Populating nulls in the other columns like the processor brand, processor na
 i)**Replacing the ‘1’ and ‘0’ with ‘Y’ for Yes and ‘N’ for No respectively in the “has_5g”, “has_nfc”, “has_ir_blaster” columns.**
 
 a)**The first step was to alter the table by creating new columns for the three columns… This was done using the query below**
+
 		Alter table Smartphone_new
 				add Uses_5g varchar,
 				Ir_blaster varchar,
@@ -174,105 +178,105 @@ c)**The old columns were deleted from the new table.**
 
 a)**Top 10 brand names by the average rating. As shown below, the AVG function was used to calculate the average rating of each brand and the round function was to make sure the values are uniform. The “as” was used to create a new name for the new column containing the new average values for each brand. The group by function categorized the brand name uniquely.**
 
-Select top 10 (brand_name), round(AVG(rating),0) as AverageRating
-from Smartphone_new
-group by brand_name
-order by AverageRating desc
+		Select top 10 (brand_name), round(AVG(rating),0) as AverageRating
+		from Smartphone_new
+		group by brand_name
+		order by AverageRating desc
 
 b)**Top 20 Average price of phones for each brand**
 
-Generating the data for the top 20 brand by the average prices of each 
-brand using the AVG function and the ORDER BY function does the sorting of the result. Desc which means the resulting table will be sorted by the Average price ranking from the highest to the lowest value. 
+	Generating the data for the top 20 brand by the average prices of each 
+	brand using the AVG function and the ORDER BY function does the sorting of the result. Desc which means the resulting table will be sorted by the Average price 	ranking from the highest to the lowest value. 
 
-Select top 20 (brand_name), AVG(price) as AveragePrice
-from  Smartphone_new
-group by brand_name
-order by AveragePrice desc
+		Select top 20 (brand_name), AVG(price) as AveragePrice
+		from  Smartphone_new
+		group by brand_name
+		order by AveragePrice desc
 
 c)**Top 10 Brand names with the highest number of phones with 5g properties**
 
-Count – This counts the number of brands that supports the use of 5g.
-Where – the where function serves as filter function returning the brands that only supports the use of 5g
+	Count – This counts the number of brands that supports the use of 5g.
+	Where – the where function serves as filter function returning the brands that only supports the use of 5g
 
 
-select top 10 (brand_name), count(Uses_5g) as count_of_5g
-from Smartphone_new
-where Uses_5g = 'Y'
-group by brand_name
-order by count_of_5g desc
+		select top 10 (brand_name), count(Uses_5g) as count_of_5g
+		from Smartphone_new
+		where Uses_5g = 'Y'
+		group by brand_name
+		order by count_of_5g desc
 
 d)**What is the most common processor brand**
 
-Select top 1 processor_brand, COUNT(*) AS count_of_brand
-from Smartphone_new
-group by processor_brand
-order by count_of_brand DESC
-Top 1 – returns the most common processor brand according to the dataset
-Count * - counts the number of brand uniquely
-AS – The AS creates an alias for the new table 
+	Select top 1 processor_brand, COUNT(*) AS count_of_brand
+	from Smartphone_new
+	group by processor_brand
+	order by count_of_brand DESC
+	Top 1 – returns the most common processor brand according to the dataset
+	Count * - counts the number of brand uniquely
+	AS – The AS creates an alias for the new table 
 
 
 
 e)**How many mobile phones runs on android**
 
-Select count(model) as count_of_phones, os
-from Smartphone_new
-where os = 'android'
-group by os
+	Select count(model) as count_of_phones, os
+	from Smartphone_new
+	where os = 'android'
+	group by os
 
-Select – Returns the selected columns to return
-From – specifies the database and table to generate the result from.
-Where – filters the data to return from the database. In the query above, the models needed was the models that runs on the android os thus the where condition that was introduced into the query.
+	Select – Returns the selected columns to return
+	From – specifies the database and table to generate the result from.
+	Where – filters the data to return from the database. In the query above, the models needed was the models that runs on the android os thus the where condition that 	was introduced into the query.
 
 
 f)**Find smartphones with a refresh rate of at least 120 Hz and a ram capacity of 8 GB or more.**
 
-Select model, refresh_rate, ram_capacity
-From Smartphone_new
-Where refresh_rate >= 120 AND ram_capacity >= 8
+	Select model, refresh_rate, ram_capacity
+	From Smartphone_new
+	Where refresh_rate >= 120 AND ram_capacity >= 8
 
-Select – Allows you select the columns to return
-From – specifies the database and table to generate the result from.
-Where – filters the data to return from the database. In the query above, the condition to be satisfied was returning smartphone models that has a refresh rate greater than or equal to 120hz and ram capacity greater than or equal to 8gb ram.
+	Select – Allows you select the columns to return
+	From – specifies the database and table to generate the result from.
+	Where – filters the data to return from the database. In the query above, the condition to be satisfied was returning smartphone models that has a refresh rate 	greater than or equal to 120hz and ram capacity greater than or equal to 8gb ram.
 
 
 g) **Total number of smartphones per brand**
 
-select brand_name, COUNT(model) AS num_of_models
-from Smartphone_new
-group by brand_name
-order by num_of_models desc
+		select brand_name, COUNT(model) AS num_of_models
+		from Smartphone_new
+		group by brand_name
+		order by num_of_models desc
 
-Select – Returns the columns to return
-From – specifies the database and table to generate the result from.
-Group by – groups the brand uniquely
-Order by – Sorts the count. This function was introduced in order to get the brand with the highest count at the top followed by the subsequent brands according to their values.
+	Select – Returns the columns to return
+	From – specifies the database and table to generate the result from.
+	Group by – groups the brand uniquely
+	Order by – Sorts the count. This function was introduced in order to get the brand with the highest count at the top followed by the subsequent brands according to 	their values.
 
 
 h)**The phone with the fastest processor_speed**
 
-Select model, processor_speed 
-From Smartphone_new
-order by processor_speed desc
+		Select model, processor_speed 
+		From Smartphone_new
+		order by processor_speed desc
 
-Select – Returns the the columns to return
-From – specifies the database and table to generate the result from.
-Order by – Sorts the ‘Processor speed’ column by ranking from the largest to the smallest value
+	Select – Returns the the columns to return
+	From – specifies the database and table to generate the result from.
+	Order by – Sorts the ‘Processor speed’ column by ranking from the largest to the smallest value
 
 
 i)**Brands that have the highest number of phones with rear camera greater than 3**
 
 
-		Select brand_name, count(model) as count_of_model
+			Select brand_name, count(model) as count_of_model
 			from Smartphone_new
 			where num_rear_cameras > 3
 			group by brand_name
 			order by count_of_model desc
 
-	Select – Returns the columns of interest.
-	Count – counts the number of values present in the dataset. In this case the count was initiated to return the number of mobile models that supports the Where 		condition grouping each brand name uniquely.
-	Where – Works as a filter for specific conditions to be met.
-	Order by – sorts the data according to the way either by descending or ascending order. In this case, the counts was sorted in descending order to return the brands 	that has the highest count according to the condition.
+		Select – Returns the columns of interest.
+		Count – counts the number of values present in the dataset. In this case the count was initiated to return the number of mobile models that supports the 		Where condition grouping each brand name uniquely.
+		Where – Works as a filter for specific conditions to be met.
+		Order by – sorts the data according to the way either by descending or ascending order. In this case, the counts was sorted in descending order to return 		the brands that has the highest count according to the condition.
 
 
 j)**Brands with the highest number of mobile phones that does not have Ir blaster but has Near field communication property**
