@@ -1,4 +1,4 @@
-DOCUMENTATION OF SQL QUERIES AND EXPLANATION OF LOGICS USED
+# **DOCUMENTATION OF SQL QUERIES AND EXPLANATION OF LOGICS USED**
 Description of the database schema and tables used
 This database schema comprises of a table designed to store and manage smartphone data. The table in the schema contains columns that represent different properties of the data being stored. This table stores detailed information about various smartphone models.
  Below is a description of the table and it’s columns:
