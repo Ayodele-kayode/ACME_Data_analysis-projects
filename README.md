@@ -5,7 +5,7 @@ This database schema comprises of a table designed to store and manage smartphon
  Below is a description of the table and it’s columns:
 Table name : Smartphone_cleaned
 Columns:
-• **brand_name (varchar)**: The brand name of the smartphone.(e.g Apple, Samsung)
+• **brand_name (varchar)** : The brand name of the smartphone.(e.g Apple, Samsung)
  • **model (varchar)**: The model name or number of the smartphone. 
 • **price (int)**: The price of the smartphone in RUPEES. 
 • **rating (float)**: The rating of the smartphone out of 100. 
@@ -94,7 +94,7 @@ f)**Replacement of nulls contained in the “primary front camera” and the “
 	
 g)**Updating the nulls in the rating column with the average rating of each brandnames…. E.g if the average of Apple brand is ‘77’, then all apple brands having nulls as their rating will be ‘77’. It was effected by firstly creating a Temporary table using the WITH_CTE for storing the average rating and then an update was carried out on the ‘rating’ column using the query below**
 
-		WITH CTE_AVG_RATING AS (
+			WITH CTE_AVG_RATING AS (
   		  SELECT 
       	 	 brand_name, 
      		   AVG(rating) AS avg_rating
@@ -104,15 +104,15 @@ g)**Updating the nulls in the rating column with the average rating of each bran
        		 rating is not null
    		 GROUP BY 
      		   brand_name
-)
-	UPDATE Smartphone_new
+		)
+		UPDATE Smartphone_new
 		SET rating = CASE 
                 WHEN rating IS NULL THEN CTE.avg_rating
                 ELSE rating
-             END
-	FROM Smartphone_new AS smart
-	JOIN CTE_AVG_RATING AS CTE
-	ON smart.brand_name = CTE.brand_name
+            	 END
+		FROM Smartphone_new AS smart
+		JOIN CTE_AVG_RATING AS CTE
+		ON smart.brand_name = CTE.brand_name
 
 h)**Populating nulls in the other columns like the processor brand, processor name and num cores with unknown. The data wasn’t provided and the nulls couldn’t be ignored. Since the Processor brand wasn’t provided, it was normal to have the same number of nulls for both the processor brand and processor name. below is the sql query to replace them**
 
