@@ -4,35 +4,58 @@ This database schema comprises of a table designed to store and manage smartphon
 
  Below is a description of the table and it’s columns:
  
-Table name : Smartphone_cleaned
+### **Table name : Smartphone_cleaned**
 
-Columns:
+### **Columns:**
 
 • **brand_name (varchar)** : The brand name of the smartphone.(e.g Apple, Samsung)
+
  • **model (varchar)**: The model name or number of the smartphone. 
+ 
 • **price (int)**: The price of the smartphone in RUPEES. 
+
 • **rating (float)**: The rating of the smartphone out of 100. 
+
 • **has_5g (Bit)** : Indicates whether the smartphone supports 5G connectivity (TRUE/FALSE). 
+
 • **has_nfc (Bit)**: Indicates whether the smartphone has NFC capability (TRUE/FALSE). 
+
 • **has_ir_blaster (Bit)**: Indicates whether the smartphone has an IR blaster (TRUE/FALSE). 
+
 • **processor_name (varchar)**: The name of the processor used in the smartphone. 
+
 • **processor_brand (varchar)**: The brand of the processor used in the smartphone. 
+
 • **num_cores (varchar)**: The number of cores in the processor. 
+
 • **processor_speed (float)**: The speed of the processor in GHz. 
+
 • **battery_capacity (int)**: The battery capacity of the smartphone in mAh. 
+
 • **fast_charging (int)**: The fast-charging capability of the smartphone in watts. 
+
 • **ram_capacity (int)**: The RAM capacity of the smartphone in GB. 
+
 • **internal_memory (int)**: The internal storage capacity of the smartphone in GB. 
+
 • **refresh_rate (int)**: The refresh rate of the smartphone display in Hz.
+
  • **resolution (int)**: The resolution of the smartphone display. 
+ 
 • **num_rear_cameras (int)**: The number of rear cameras on the smartphone.
+
  • **num_front_cameras (int)**: The number of front cameras on the smartphone. 
+ 
 •**os (varchar)**: The operating system used in the smartphone. 
+
 **primary_camera_rear (varchar)**: The resolution of the primary rear camera in megapixels.
+
  • **primary_camera_front (varchar)**: The resolution of the primary front camera in megapixels.
+ 
  • **extended_memory (bit)**: The capacity of extended memory (e.g., microSD card support) in the smartphone, if applicable
 
 # **Explanation of SQL query logic and any data transformations performed**
+
 1.	## **Data cleaning**
    
 **a)A copy of the table was made and named “Smartphone_new” to avoid tampering with the original table, it was done using the query below :**
