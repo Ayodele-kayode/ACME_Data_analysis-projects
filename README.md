@@ -3,8 +3,11 @@
 This database schema comprises of a table designed to store and manage smartphone data. The table in the schema contains columns that represent different properties of the data being stored. This table stores detailed information about various smartphone models.
 
  Below is a description of the table and it’s columns:
+ 
 Table name : Smartphone_cleaned
+
 Columns:
+
 • **brand_name (varchar)** : The brand name of the smartphone.(e.g Apple, Samsung)
  • **model (varchar)**: The model name or number of the smartphone. 
 • **price (int)**: The price of the smartphone in RUPEES. 
