@@ -37,6 +37,7 @@ Columns:
 			into Smartphone_new
 			from smartphone_cleaned_v2
 
+
 **b)A check was conducted to get rid of duplicates**
 			With SmartPhoneCTE AS (
 						Select *,
