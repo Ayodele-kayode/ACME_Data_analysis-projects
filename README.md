@@ -261,86 +261,85 @@ Order by – Sorts the ‘Processor speed’ column by ranking from the largest 
 i)**Brands that have the highest number of phones with rear camera greater than 3**
 
 
-Select brand_name, count(model) as count_of_model
-from Smartphone_new
-where num_rear_cameras > 3
-group by brand_name
-order by count_of_model desc
+		Select brand_name, count(model) as count_of_model
+			from Smartphone_new
+			where num_rear_cameras > 3
+			group by brand_name
+			order by count_of_model desc
 
-Select – Returns the columns of interest.
-Count – counts the number of values present in the dataset. In this case the count was initiated to return the number of mobile models that supports the Where condition grouping each brand name uniquely.
-Where – Works as a filter for specific conditions to be met.
-Order by – sorts the data according to the way either by descending or ascending order. In this case, the counts was sorted in descending order to return the brands that has the highest count according to the condition.
+	Select – Returns the columns of interest.
+	Count – counts the number of values present in the dataset. In this case the count was initiated to return the number of mobile models that supports the Where 		condition grouping each brand name uniquely.
+	Where – Works as a filter for specific conditions to be met.
+	Order by – sorts the data according to the way either by descending or ascending order. In this case, the counts was sorted in descending order to return the brands 	that has the highest count according to the condition.
 
 
 j)**Brands with the highest number of mobile phones that does not have Ir blaster but has Near field communication property**
 
 
-Select brand_name, count(brand_name) as num_of_brand
-from Smartphone_new
-where Ir_blaster = 'N' and Near_field_comm = 'Y'
-group by brand_name
-order by num_of_brand desc
+				Select brand_name, count(brand_name) as num_of_brand
+					from Smartphone_new
+					where Ir_blaster = 'N' and Near_field_comm = 'Y'
+					group by brand_name
+					order by num_of_brand desc
 
-Select – Allows you select the columns to return
-From – specifies the database and table to generate the result from.
-Where – filters the data to return from the database. In the below   query, the brand name that does not have the Ir_blaster but does have the Near field comms. The “and” combines two or more conditions to be satisfied in order to return the desired data.
-Group by – groups the brand uniquely
+	Select – Allows you select the columns to return
+	From – specifies the database and table to generate the result from.
+	Where – filters the data to return from the database. In the below   query, the brand name that does not have the Ir_blaster but does have the Near field comms. The 	“and” combines two or more conditions to be satisfied in order to return the desired data.
+	Group by – groups the brand uniquely
 
 
 k)**Checking to see the top 5 brands with the fastest charging rate**
 
 
-    select top 5 brand_name, MAX(fast_charging) as Fastest_charging_brand
-from Smartphone_new
-group by brand_name
-order by Fastest_charging_brand desc
+   			 select top 5 brand_name, MAX(fast_charging) as Fastest_charging_brand
+					from Smartphone_new
+					group by brand_name
+					order by Fastest_charging_brand desc
 
-Select – returns the desired columns.
-Top 5 – returns the best 5 brands with the highest charging rate.
-From – specifies the database and table to generate the result from.
-Max – this function returns the maximum value contained in the column as in this case the brand with the highest charging rate.
-Group by – groups the brand uniquely
-Order by – Arranges the results in descending order(Desc) to speicify the values at the top
+	Select – returns the desired columns.
+	Top 5 – returns the best 5 brands with the highest charging rate.
+	From – specifies the database and table to generate the result from.
+	Max – this function returns the maximum value contained in the column as in this case the brand with the highest charging rate.
+	Group by – groups the brand uniquely
+	Order by – Arranges the results in descending order(Desc) to speicify the values at the top
 
 
 l)**checking for processor brand that supports extended memory up to 1TB and has processor_speed greater than or equal to 2.5**
 
-select processor_brand, count(processor_brand) as num_of_pro_brands
-from Smartphone_new
-where processor_speed > 2.5 and extended_memory >= '1TB'
-group by processor_brand
-order by num_of_pro_brands desc
+			select processor_brand, count(processor_brand) as num_of_pro_brands
+			from Smartphone_new
+			where processor_speed > 2.5 and extended_memory >= '1TB'
+			group by processor_brand
+			order by num_of_pro_brands desc
 
-
-Select – Allows you select the columns to return
-From – specifies the database and table to generate the result from.
-Where – filters the data to return from the database. In the below   query, the mobile phones with processor speed greater than or equal to 2.5 and also supports extended memory up to 1TB
-Group by – groups the brand uniquely
+	Select – Allows you select the columns to return
+	From – specifies the database and table to generate the result from.
+	Where – filters the data to return from the database. In the below   query, the mobile phones with processor speed greater than or equal to 2.5 and also supports 	extended memory up to 1TB
+	Group by – groups the brand uniquely
 
 
 
 m) **Checking for brands with battery capacity greater than '5500' and has fast charging < '200'**
 
 
-select brand_name, count(battery_capacity) as count_of_brands
-from Smartphone_new
-where fast_charging < 200 and battery_capacity > 5500
-group by brand_name
-order by count_of_brands desc
+			select brand_name, count(battery_capacity) as count_of_brands
+				from Smartphone_new
+				where fast_charging < 200 and battery_capacity > 5500
+				group by brand_name
+				order by count_of_brands desc
 
 
-Select – Allows you select the columns to return
-From – specifies the database and table to generate the result from.
-Where – filters the data to return from the database. In the below   query, the mobile phones with battery capacity greater than 5500 and fast charging less than 200kw.
-Group by – groups the brand uniquely.
+	Select – Allows you select the columns to return
+	From – specifies the database and table to generate the result from.
+	Where – filters the data to return from the database. In the below   query, the mobile phones with battery capacity greater than 5500 and fast charging less than 	200kw.
+	Group by – groups the brand uniquely.
 
 
 
 
-NOTE
+		### **NOTE**
 
-Dealing with the average was something I came up with and the right thing should have been assuming it was a client’s data to reach out and verify if it could be removed or corrected. Thank you.
+		Dealing with the average was something I came up with and the right thing should have been assuming it was a client’s data to reach out and verify if it 		could be removed or corrected. Thank you.
 
 
 
